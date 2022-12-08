@@ -1,0 +1,17 @@
+{
+  "name": "Http",
+  "coucheNumber": 7,
+  "protocolIdentification": "48545450",
+  "maxSize": 480,
+  "requestTypeSeparator": "0D0A",
+  "headerSeparator": "20",
+
+  "fields": {},
+  "nextProtocolEncapsulated": [],
+
+  "options": {
+    "greatherThanField": "totalLength",
+    "valueToBeGreather": 40,
+    "fields": {}
+  }
+}

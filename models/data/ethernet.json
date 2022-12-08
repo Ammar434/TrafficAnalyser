@@ -1,0 +1,38 @@
+{
+  "name": "Ethernet",
+  "coucheNumber": 2,
+  "protocolIdentification": "802.3",
+  "requestTypeSeparator": "",
+  "headerSeparator": "",
+
+  "maxSize": 12208,
+  "fields": {
+    "destMacAddress": {
+      "min": 48,
+      "max": 48,
+      "name": "Destination mac addresse"
+    },
+    "sourceMacAddress": {
+      "min": 48,
+      "max": 48,
+      "name": "Source mac addresse"
+    },
+    "nextProtocolNumber": {
+      "min": 16,
+      "max": 16,
+      "name": "Numero de protocole encapsule"
+    },
+    "data": {
+      "min": 368,
+      "max": 12000,
+      "name": "Donnees"
+    }
+  },
+  "options": {
+    "greatherThanField": "totalLength",
+    "valueToBeGreather": 40,
+    "fields": {}
+  },
+
+  "nextProtocolEncapsulated": ["nextProtocolNumber"]
+}

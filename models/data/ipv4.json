@@ -1,0 +1,103 @@
+{
+  "name": "Ipv4",
+  "coucheNumber": 3,
+  "protocolIdentification": "0800",
+  "maxSize": 480,
+  "requestTypeSeparator": "",
+  "headerSeparator": "",
+
+  "fields": {
+    "version": {
+      "min": 4,
+      "max": 4,
+      "name": "Version"
+    },
+    "header": {
+      "min": 4,
+      "max": 4,
+      "name": "Header"
+    },
+
+    "typeOfService": {
+      "min": 8,
+      "max": 8,
+      "name": "Type de service"
+    },
+
+    "totalLength": {
+      "min": 16,
+      "max": 16,
+      "name": "Longueur totale"
+    },
+    "identification": {
+      "min": 16,
+      "max": 16,
+      "name": "Identification"
+    },
+    "reserved": {
+      "min": 1,
+      "max": 1,
+      "name": "Reserved"
+    },
+    "dontFragment": {
+      "min": 1,
+      "max": 1,
+      "name": "Don't fragment"
+    },
+    "moreFragment": {
+      "min": 1,
+      "max": 1,
+      "name": "More fragment"
+    },
+    "fragmentOffset": {
+      "min": 13,
+      "max": 13,
+      "name": "Position du fraguement"
+    },
+
+    "ttl": {
+      "min": 8,
+      "max": 8,
+      "name": "Duree de vie"
+    },
+    "nextProtocolNumber": {
+      "min": 8,
+      "max": 8,
+      "name": "Numero de protocole"
+    },
+
+    "checksumHeader": {
+      "min": 16,
+      "max": 16,
+      "name": "Checksum"
+    },
+    "srcIpAddress": {
+      "min": 32,
+      "max": 32,
+      "name": "Addresse ip source"
+    },
+    "dstIpAddress": {
+      "min": 32,
+      "max": 32,
+      "name": "Addresse ip destination"
+    },
+    "options": {
+      "name": "Options",
+      "min": 0,
+      "max": 320
+    },
+
+    "data": {
+      "min": 20,
+      "max": 12000,
+      "name": "Donnees"
+    }
+  },
+  "nextProtocolEncapsulated": ["nextProtocolNumber"],
+
+  "options": {
+    "greatherThanField": "header",
+    "valueToBeGreather": 5,
+    "fields": {}
+  }
+}

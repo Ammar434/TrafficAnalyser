@@ -1,0 +1,81 @@
+{
+  "name": "TcP",
+  "coucheNumber": 4,
+  "protocolIdentification": "06",
+  "maxSize": 480,
+  "requestTypeSeparator": "",
+  "headerSeparator": "",
+
+  "fields": {
+    "portSource": {
+      "min": 16,
+      "max": 16,
+      "name": "Port source"
+    },
+
+    "portDestination": {
+      "min": 16,
+      "max": 16,
+      "name": "Port destination"
+    },
+
+    "sequenceNumber": {
+      "min": 32,
+      "max": 32,
+      "name": "Numero de sequence"
+    },
+
+    "acknowledgement": {
+      "min": 32,
+      "max": 32,
+      "name": "Acquitement"
+    },
+
+    "headerLength": {
+      "min": 4,
+      "max": 4,
+      "name": "Longueur en tete"
+    },
+
+    "flags": {
+      "min": 12,
+      "max": 12,
+      "name": "Flags"
+    },
+
+    "windows": {
+      "min": 16,
+      "max": 16,
+      "name": "Fenetre"
+    },
+
+    "checksum": {
+      "min": 16,
+      "max": 16,
+      "name": "Checksum"
+    },
+    "urgentPointeur": {
+      "min": 16,
+      "max": 16,
+      "name": "Pointeur de message urgent"
+    },
+
+    "options": {
+      "name": "Options",
+      "min": 0,
+      "max": 320
+    },
+
+    "data": {
+      "min": 20,
+      "max": 60,
+      "name": "Donnees"
+    }
+  },
+  "nextProtocolEncapsulated": ["data"],
+  "options": {
+    "greatherThanField": "headerLength",
+    "fields": {},
+    "valueToBeGreather": 5
+  }
+}
