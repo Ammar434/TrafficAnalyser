@@ -2,8 +2,8 @@ from models.field import Field
 from models.protocol import ALL_PROTOCOl, Protocol
 from models.trame import Trame
 from services.integer_convert import binary_to_hex, hex_to_ascii, hex_to_bin
-from copy import deepcopy, copy
-
+from copy import deepcopy
+from utils.constants import compteur
 
 class DecodeTrame:
 
@@ -184,7 +184,9 @@ class DecodeTrame:
 
     def decodeAllTrame(self, listTrame):
         listDecodedTrame = []
+        global compteur
         for count, trame in enumerate(listTrame):
             t = self.decodeAllProtocol(trame, count)
             listDecodedTrame.append(t)
+            compteur = compteur + 1
         return listDecodedTrame

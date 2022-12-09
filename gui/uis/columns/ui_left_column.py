@@ -116,7 +116,7 @@ class Ui_LeftColumn(object):
         self.label_1.setText(QCoreApplication.translate(
             "LeftColumn", u"Menu 1 - Left Menu", None))
         self.label_2.setText(QCoreApplication.translate(
-            "LeftColumn", u"Menu 2 - Left Menu", None))
-        self.label_3.setText(QCoreApplication.translate("LeftColumn", u"This is just an example menu.\n"
-                                                        "Add Qt Widgets or your custom widgets here.", None))
+            "LeftColumn", u"Protocoles :\n Ethernet \n Ipv4 \n Tcp \n Http", None))
+        self.label_3.setText(QCoreApplication.translate("LeftColumn", u"Cette application a été réalisée dans le cadre de l'UE LU3IN033.\n"
+                                                        "Son but permettre de visualiser le traffic réseau", None))
     # retranslateUi

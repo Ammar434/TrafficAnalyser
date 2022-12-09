@@ -28,6 +28,8 @@ from services.trame_reader import TrameReader
 from utils.constants import SUCCESS
 from utils.pdf_maker import PDF, print_to_pdf
 
+
+
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
 os.environ["QT_FONT_DPI"] = "96"
@@ -106,6 +108,9 @@ class MainWindow(QMainWindow):
                 self.printerMethod.clearAll()
                 MainFunctions.clear_screen(self)
                 MainFunctions.display_loading(self)
+
+
+
                 listeTrame = self.trameReader.createTramesList(self.path)
                 self.printerMethod.listeDecodedTrame = DecodeTrame().decodeAllTrame(listeTrame)
                 self.printerMethod.displayThroughCriteria(
@@ -160,7 +165,7 @@ class MainWindow(QMainWindow):
                 MainFunctions.set_left_column_menu(
                     self,
                     menu=self.ui.left_column.menus.menu_2,
-                    title="Info tab",
+                    title="Information",
                     icon_path=Functions.set_svg_icon("icon_info.svg")
                 )
 
