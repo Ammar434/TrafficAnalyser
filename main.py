@@ -26,6 +26,7 @@ from services.decode_trame import DecodeTrame
 from services.integer_convert import binary_to_ip_dotted
 from services.trame_reader import TrameReader
 from utils.constants import SUCCESS
+from utils.pdf_maker import PDF, print_to_pdf
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -60,6 +61,9 @@ class MainWindow(QMainWindow):
         settings = Settings()
         self.settings = settings.items
 
+        # SETUP PDF
+        # ///////////////////////////////////////////////////////////////
+
         # SETUP MAIN WINDOW
         # ///////////////////////////////////////////////////////////////
         self.hide_grips = True  # Show/Hide resize grips
@@ -74,11 +78,11 @@ class MainWindow(QMainWindow):
     # SHOW MAIN WINDOW
     # ///////////////////////////////////////////////////////////////
         self.show()
-
     # LEFT MENU BTN IS CLICKED
     # Run function when btn is clicked
     # Check funtion by object name / btn_id
     # ///////////////////////////////////////////////////////////////
+
     def btn_clicked(self):
         # GET BT CLICKED
         btn = SetupMainWindow.setup_btns(self)
@@ -133,11 +137,7 @@ class MainWindow(QMainWindow):
         # print(listeIp)
         # LOAD USER PAGE
         if btn.objectName() == "btn_save":
-            print("Save the file to pdf")
-            MainFunctions.clear_screen(self)
-
-            # self.ui.combo_1.addItem('1')
-            # MainFunctions.export_to_pdf(self)
+            print_to_pdf(self.printerMethod.displayList, self.path)
 
         if btn.objectName() == "btn_info":
             # CHECK IF LEFT COLUMN IS VISIBLE
@@ -237,8 +237,6 @@ class MainWindow(QMainWindow):
 
     def index_changed_1(self, index):
         pass
-        # MainFunctions.update_table(
-        #     self, self.printerMethod.displayList, self.path)
 
     def activated_2(self, index):
         pass
@@ -250,13 +248,6 @@ class MainWindow(QMainWindow):
             self.src, self.dst, self.pro)
         MainFunctions.update_table(
             self, self.printerMethod.displayList, self.path)
-
-        # MainFunctions.clear_screen(self)
-        # self.dst = s
-        # self.printerMethod.displayThroughCriteria(
-        #     self.src, self.dst, self.pro)
-        # MainFunctions.update_table(
-        #     self, self.printerMethod.displayList, self.path)
 
     def index_changed_2(self, index):
         pass
