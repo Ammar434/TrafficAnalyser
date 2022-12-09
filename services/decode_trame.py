@@ -20,10 +20,10 @@ class DecodeTrame:
         return ""
 
     def findNextProtocol(self, currentLayer, nextProtocol, trame):
-
         hexData = binary_to_hex(trame.data)
+
         # CODE FOR HTTP
-        if currentLayer == 4 and hexData.find("48545450") == 1:
+        if currentLayer == 4 and ("48545450" in hexData or "68747470" in hexData):
             return ALL_PROTOCOl[7][0], 7
 
         for layer, listeProtocolForALayer in ALL_PROTOCOl.items():
@@ -55,24 +55,15 @@ class DecodeTrame:
         id = protocol.options.greatherThanField
         dif = 0
         message = ""
-        # print(protocol.options.greatherThanField)
-        # print(protocol.options.valueToBeGreather)
+
         for f in listFields:
             if f.id == id:
                 # WE MULTIPLY BY 4 BECAUSE HEADER LENGTH REPRESENT THE LEN OF WORD
-                print(binary_to_hex(f.content))
-                print(int(f.content, 2))
-                # dif = (int(f.content, 2) - val) * 4
-
                 dif = (int(f.content, 2) - val) * 4
-                print("diff "+str(dif))
                 break
-            # print(f.id)
 
         i = 0
-        # print(dif)
         while i < dif * 8:
-            # print(i)
             message = message + trame[i+offset]
             i = i + 1
         return (message, i)
@@ -179,7 +170,7 @@ class DecodeTrame:
 
                 copyProtocol = deepcopy(currentProtocol)
                 copyProtocol.fields = fields
-                trame.all_protocol_inside[currentProtocolLayer] = copyProtocol
+                trame.updateProtocolInside(currentProtocolLayer, copyProtocol)
 
             nextProtocol = self.identifyNextProtocol(currentProtocol, fields)
 

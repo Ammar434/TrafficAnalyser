@@ -1,10 +1,11 @@
 {
-  "name": "TcP",
+  "name": "Tcp",
   "coucheNumber": 4,
   "protocolIdentification": "06",
   "maxSize": 480,
   "requestTypeSeparator": "",
   "headerSeparator": "",
+  "color": "f27601",
 
   "fields": {
     "portSource": {
@@ -36,11 +37,56 @@
       "max": 4,
       "name": "Longueur en tete"
     },
+    "reserved": {
+      "min": 3,
+      "max": 3,
+      "name": "Reserved"
+    },
+    "ecn-accurate": {
+      "min": 1,
+      "max": 1,
+      "name": "Accurate ECN"
+    },
+    "cwr": {
+      "min": 1,
+      "max": 1,
+      "name": "Congestion Window Reduced"
+    },
 
-    "flags": {
-      "min": 12,
-      "max": 12,
-      "name": "Flags"
+    "ecn-echo": {
+      "min": 1,
+      "max": 1,
+      "name": "ECN Echo"
+    },
+    "urgent": {
+      "min": 1,
+      "max": 1,
+      "name": "Urgent pointer"
+    },
+    "ack": {
+      "min": 1,
+      "max": 1,
+      "name": "Acknowledgment"
+    },
+    "psh": {
+      "min": 1,
+      "max": 1,
+      "name": "Push"
+    },
+    "rst": {
+      "min": 1,
+      "max": 1,
+      "name": "Reset"
+    },
+    "syn": {
+      "min": 1,
+      "max": 1,
+      "name": "Synchronize"
+    },
+    "fin": {
+      "min": 1,
+      "max": 1,
+      "name": "Fin"
     },
 
     "windows": {
@@ -68,7 +114,7 @@
 
     "data": {
       "min": 20,
-      "max": 60,
+      "max": 64000,
       "name": "Donnees"
     }
   },

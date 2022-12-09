@@ -26,11 +26,12 @@ class Protocol:
         maxSize,
         requestTypeSeparator,
         nextProtocolEncapsulated,
-        headerSeparator
+        headerSeparator,
+        color,
 
     ) -> None:
         self.name = name
-        self.coucheNumber = coucheNumber
+        self.layer = coucheNumber
         self.maxSize = maxSize
         self.protocolIdentification = protocolIdentification
         self.fields = self.loadAllField(fields)
@@ -38,6 +39,7 @@ class Protocol:
         self.requestTypeSeparator = requestTypeSeparator
         self.headerSeparator = headerSeparator
         self.nextProtocolEncapsulated = nextProtocolEncapsulated
+        self.color = color
 
     @staticmethod
     def loadModelFromJson(filePath):
@@ -53,7 +55,7 @@ class Protocol:
             if file.endswith(".json"):
                 path = f"{filePath}\{file}"
                 model = Protocol.loadModelFromJson(path)
-                ALL_PROTOCOl[model.coucheNumber].append(model)
+                ALL_PROTOCOl[model.layer].append(model)
         return res
 
     def loadAllField(self, fields):

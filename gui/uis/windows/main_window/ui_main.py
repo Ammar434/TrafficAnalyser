@@ -1,21 +1,4 @@
-# ///////////////////////////////////////////////////////////////
-#
-# BY: WANDERSON M.PIMENTA
-# PROJECT MADE WITH: Qt Designer and PySide6
-# V: 1.0.0
-#
-# This project can be used freely for all uses, as long as they maintain the
-# respective credits only in the Python scripts, any information in the visual
-# interface (GUI) can be modified without any implication.
-#
-# There are limitations on Qt licenses if you want to use your products
-# commercially, I recommend reading them on the official website:
-# https://doc.qt.io/qtforpython/licenses.html
-#
-# ///////////////////////////////////////////////////////////////
 
-# IMPORT PACKAGES AND MODULES
-# ///////////////////////////////////////////////////////////////
 from gui.core.functions import Functions
 
 # IMPORT QT CORE
@@ -74,6 +57,9 @@ class UI_MainWindow(object):
                       [0], self.settings["startup_size"][1])
         parent.setMinimumSize(
             self.settings["minimum_size"][0], self.settings["minimum_size"][1])
+
+        parent.setFixedSize(self.settings["startup_size"]
+                            [0], self.settings["startup_size"][1])
 
         # SET CENTRAL WIDGET
         # Add central widget to app
@@ -277,6 +263,20 @@ class UI_MainWindow(object):
         self.content_area_layout.addWidget(self.content_area_left_frame)
         self.content_area_layout.addWidget(self.right_column_frame)
 
+        # COMBOBOX / BOTTOM APP FRAME
+        # ///////////////////////////////////////////////////////////////
+        # self.combo_1 = QComboBox()
+        # style = f'''
+        # color: {self.themes["app_color"]["text_foreground"]};
+        #         border: 1px solid {self.themes["app_color"]["bg_three"]};
+        #         border-radius:10px;
+        #         padding-left:10px;
+        #     '''
+        # self.combo_1.setStyleSheet(style)
+
+        # self.combo_1.addItem("Selectionner ip dest")
+
+        # self.load_pages.horizontalLayout_ForComboBox.addWidget(self.combo_1)
         # CREDITS / BOTTOM APP FRAME
         # ///////////////////////////////////////////////////////////////
         self.credits_frame = QFrame()
@@ -298,6 +298,8 @@ class UI_MainWindow(object):
         )
 
         #  ADD TO LAYOUT
+        # self.load_pages.horizontalLayout_ForComboBox.addWidget(self.credits)
+
         self.credits_layout.addWidget(self.credits)
 
         # ADD WIDGETS TO RIGHT LAYOUT

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-# Form generated from reading UI file 'main_pagesUbsULq.ui'
+# Form generated from reading UI file 'main_pagesTKySkt.ui'
 ##
 # Created by: Qt User Interface Compiler version 6.4.1
 ##
@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
                            QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel,
-                               QLayout, QScrollArea, QSizePolicy, QStackedWidget,
-                               QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QHBoxLayout,
+                               QLabel, QLayout, QScrollArea, QSizePolicy,
+                               QStackedWidget, QVBoxLayout, QWidget)
 
 
 class Ui_MainPages(object):
@@ -41,10 +41,11 @@ class Ui_MainPages(object):
         self.scrollArea = QScrollArea(self.page_1)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setStyleSheet(u"background: transparent;")
+        self.scrollArea.setFrameShape(QFrame.NoFrame)
         self.scrollArea.setWidgetResizable(True)
         self.contents_2 = QWidget()
         self.contents_2.setObjectName(u"contents_2")
-        self.contents_2.setGeometry(QRect(0, 0, 838, 578))
+        self.contents_2.setGeometry(QRect(0, 0, 840, 580))
         self.contents_2.setStyleSheet(u"")
         self.verticalLayout_4 = QVBoxLayout(self.contents_2)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
@@ -70,6 +71,115 @@ class Ui_MainPages(object):
         self.row_for_tab.setObjectName(u"row_for_tab")
 
         self.verticalLayout_4.addLayout(self.row_for_tab)
+        self.horizontalLayout_ForComboBox = QHBoxLayout()
+        self.horizontalLayout_ForComboBox.setObjectName(
+            u"horizontalLayout_ForComboBox")
+        self.comboBox_3 = QComboBox(self.contents_2)
+        self.comboBox_3.addItem("")
+        self.comboBox_3.setObjectName(u"comboBox_3")
+        self.comboBox_3.setStyleSheet(u"QComboBox{\n"
+                                      "	background-color: rgb(52, 59, 72);\n"
+                                      "	border-radius: 20px;\n"
+                                      "	border: 2px solid rgb(52, 59, 72);\n"
+                                      "	padding: 5px;\n"
+                                      "	padding-left: 10px;\n"
+                                      "}\n"
+                                      "QComboBox:hover{\n"
+                                      "	border: 2px solid rgb(64, 71, 88);\n"
+                                      "}\n"
+                                      "QComboBox::drop-down {\n"
+                                      "	subcontrol-origin: padding;\n"
+                                      "	subcontrol-position: top right;\n"
+                                      "	width: 25px; \n"
+                                      "	border-left-width: 3px;\n"
+                                      "	border-left-color: rgba(39, 44, 54, 150);\n"
+                                      "	border-left-style: solid;\n"
+                                      "	border-top-right-radius: 3px;\n"
+                                      "	border-bottom-right-radius: 3px;	\n"
+                                      "	background-image: url(:\gui\images\svg_icons\arrow_down.ico);\n"
+                                      "	background-position: center;\n"
+                                      "	background-repeat: no-reperat;\n"
+                                      " }\n"
+                                      "QComboBox QAbstractItemView {\n"
+                                      "	color: rgb(255, 121, 198);	\n"
+                                      "	background-color: rgb(33, 37, 43);\n"
+                                      "	padding: 10px;\n"
+                                      "	selection-background-color: rgb(39, 44, 54);\n"
+                                      "}")
+
+        self.horizontalLayout_ForComboBox.addWidget(self.comboBox_3)
+
+        self.comboBox_2 = QComboBox(self.contents_2)
+        self.comboBox_2.addItem("")
+        self.comboBox_2.setObjectName(u"comboBox_2")
+        self.comboBox_2.setStyleSheet(u"QComboBox{\n"
+                                      "	background-color: rgb(52, 59, 72);\n"
+                                      "	border-radius: 20px;\n"
+                                      "	border: 2px solid rgb(52, 59, 72);\n"
+                                      "	padding: 5px;\n"
+                                      "	padding-left: 10px;\n"
+                                      "}\n"
+                                      "QComboBox:hover{\n"
+                                      "	border: 2px solid rgb(64, 71, 88);\n"
+                                      "}\n"
+                                      "QComboBox::drop-down {\n"
+                                      "	subcontrol-origin: padding;\n"
+                                      "	subcontrol-position: top right;\n"
+                                      "	width: 25px; \n"
+                                      "	border-left-width: 3px;\n"
+                                      "	border-left-color: rgba(39, 44, 54, 150);\n"
+                                      "	border-left-style: solid;\n"
+                                      "	border-top-right-radius: 3px;\n"
+                                      "	border-bottom-right-radius: 3px;	\n"
+                                      "	background-image: url(:\gui\images\svg_icons\arrow_down.ico);\n"
+                                      "	background-position: center;\n"
+                                      "	background-repeat: no-reperat;\n"
+                                      " }\n"
+                                      "QComboBox QAbstractItemView {\n"
+                                      "	color: rgb(255, 121, 198);	\n"
+                                      "	background-color: rgb(33, 37, 43);\n"
+                                      "	padding: 10px;\n"
+                                      "	selection-background-color: rgb(39, 44, 54);\n"
+                                      "}")
+
+        self.horizontalLayout_ForComboBox.addWidget(self.comboBox_2)
+
+        self.comboBox = QComboBox(self.contents_2)
+        self.comboBox.addItem("")
+        self.comboBox.setObjectName(u"comboBox")
+        self.comboBox.setStyleSheet(u"QComboBox{\n"
+                                    "	background-color: rgb(52, 59, 72);\n"
+                                    "	border-radius: 20px;\n"
+                                    "	border: 2px solid rgb(52, 59, 72);\n"
+                                    "	padding: 5px;\n"
+                                    "	padding-left: 10px;\n"
+                                    "}\n"
+                                    "QComboBox:hover{\n"
+                                    "	border: 2px solid rgb(64, 71, 88);\n"
+                                    "}\n"
+                                    "QComboBox::drop-down {\n"
+                                    "	subcontrol-origin: padding;\n"
+                                    "	subcontrol-position: top right;\n"
+                                    "	width: 25px; \n"
+                                    "	border-left-width: 3px;\n"
+                                    "	border-left-color: rgba(39, 44, 54, 150);\n"
+                                    "	border-left-style: solid;\n"
+                                    "	border-top-right-radius: 3px;\n"
+                                    "	border-bottom-right-radius: 3px;	\n"
+                                    "	background-image: url(:\gui\images\svg_icons\arrow_down.ico);\n"
+                                    "	background-position: center;\n"
+                                    "	background-repeat: no-reperat;\n"
+                                    " }\n"
+                                    "QComboBox QAbstractItemView {\n"
+                                    "	color: rgb(255, 121, 198);	\n"
+                                    "	background-color: rgb(33, 37, 43);\n"
+                                    "	padding: 10px;\n"
+                                    "	selection-background-color: rgb(39, 44, 54);\n"
+                                    "}")
+
+        self.horizontalLayout_ForComboBox.addWidget(self.comboBox)
+
+        self.verticalLayout_4.addLayout(self.horizontalLayout_ForComboBox)
 
         self.scrollArea.setWidget(self.contents_2)
 
@@ -91,7 +201,7 @@ class Ui_MainPages(object):
         self.scroll_area.setWidgetResizable(True)
         self.contents = QWidget()
         self.contents.setObjectName(u"contents")
-        self.contents.setGeometry(QRect(0, 0, 840, 580))
+        self.contents.setGeometry(QRect(0, 0, 215, 266))
         self.contents.setStyleSheet(u"background: transparent;")
         self.verticalLayout = QVBoxLayout(self.contents)
         self.verticalLayout.setSpacing(15)
@@ -172,9 +282,21 @@ class Ui_MainPages(object):
         MainPages.setWindowTitle(
             QCoreApplication.translate("MainPages", u"Form", None))
         self.title_label_2.setText(QCoreApplication.translate(
-            "MainPages", u"Custom Widgets Page", None))
-        self.description_label_2.setText(QCoreApplication.translate("MainPages", u"Here will be all the custom widgets, they will be added over time on this page.\n"
-                                                                    "I will try to always record a new tutorial when adding a new Widget and updating the project on Patreon before launching on GitHub and GitHub after the public release.", None))
+            "MainPages", u"Visualisateur de traffic r\u00e9seau", None))
+        self.description_label_2.setText(QCoreApplication.translate("MainPages", u"Ici, appara\u00eetra le trafic r\u00e9seau correspondant \u00e0 une trame.\n"
+                                                                    "Pour commencer \u00e0 analyser une trame, il faut la s\u00e9lectionner dans le menu \u00e0 votre gauche.\n"
+                                                                    "Si besoin, vous pouvez filtrer la trame affich\u00e9e selon quelques crit\u00e8res.\n"
+                                                                    "\n"
+                                                                    "", None))
+        self.comboBox_3.setItemText(0, QCoreApplication.translate(
+            "MainPages", u"Display all source IP", None))
+
+        self.comboBox_2.setItemText(0, QCoreApplication.translate(
+            "MainPages", u"Display all dest IP", None))
+
+        self.comboBox.setItemText(0, QCoreApplication.translate(
+            "MainPages", u"Display all protocol", None))
+
         self.title_label.setText(QCoreApplication.translate(
             "MainPages", u"Custom Widgets Page", None))
         self.description_label.setText(QCoreApplication.translate("MainPages", u"Here will be all the custom widgets, they will be added over time on this page.\n"

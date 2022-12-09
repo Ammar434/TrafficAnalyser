@@ -1,24 +1,10 @@
-# ///////////////////////////////////////////////////////////////
-#
-# BY: WANDERSON M.PIMENTA
-# PROJECT MADE WITH: Qt Designer and PySide6
-# V: 1.0.0
-#
-# This project can be used freely for all uses, as long as they maintain the
-# respective credits only in the Python scripts, any information in the visual
-# interface (GUI) can be modified without any implication.
-#
-# There are limitations on Qt licenses if you want to use your products
-# commercially, I recommend reading them on the official website:
-# https://doc.qt.io/qtforpython/licenses.html
-#
-# ///////////////////////////////////////////////////////////////
 
-# IMPORT PACKAGES AND MODULES
-# ///////////////////////////////////////////////////////////////
 from gui.uis.windows.main_window.functions_main_window import *
 import sys
 import os
+from models.protocol import Protocol
+from models.printer_method import PrinterMethod
+from utils.dynamic_value import listeIp
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
@@ -36,6 +22,10 @@ from gui.uis.windows.main_window import *
 # IMPORT PY ONE DARK WIDGETS
 # ///////////////////////////////////////////////////////////////
 from gui.widgets import *
+from services.decode_trame import DecodeTrame
+from services.integer_convert import binary_to_ip_dotted
+from services.trame_reader import TrameReader
+from utils.constants import SUCCESS
 
 # ADJUST QT FONT DPI FOR HIGHT SCALE AN 4K MONITOR
 # ///////////////////////////////////////////////////////////////
@@ -50,6 +40,15 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # SETUP PROTOCOL
+        # Load protocol from "models\data"
+        # ///////////////////////////////////////////////////////////////
+        res = Protocol.loadAllProtocol()
+        if res != SUCCESS:
+            print("All protocol not load correctly")
+            return
+
+        self.trameReader = TrameReader()
         # SETUP MAIN WINDOw
         # Load widgets from "gui\uis\main_window\ui_main.py"
         # ///////////////////////////////////////////////////////////////
@@ -66,8 +65,14 @@ class MainWindow(QMainWindow):
         self.hide_grips = True  # Show/Hide resize grips
         SetupMainWindow.setup_gui(self)
 
-        # SHOW MAIN WINDOW
-        # ///////////////////////////////////////////////////////////////
+        self.printerMethod = PrinterMethod()
+        self.path = ""
+        self.src = str(combo_box_initial_ip_src)
+        self.dst = str(combo_box_initial_ip_dst)
+        self.pro = str(combo_box_initial_protocol)
+
+    # SHOW MAIN WINDOW
+    # ///////////////////////////////////////////////////////////////
         self.show()
 
     # LEFT MENU BTN IS CLICKED
@@ -82,14 +87,6 @@ class MainWindow(QMainWindow):
         if btn.objectName() != "btn_settings":
             self.ui.left_menu.deselect_all_tab()
 
-        # Get Title Bar Btn And Reset Active
-        # top_settings = MainFunctions.get_title_bar_btn(
-        #     self, "btn_top_settings")
-        # top_settings.set_active(False)
-
-        # LEFT MENU
-        # ///////////////////////////////////////////////////////////////
-
         # HOME BTN
         if btn.objectName() == "btn_home":
             # Select Menu
@@ -100,22 +97,48 @@ class MainWindow(QMainWindow):
 
         # WIDGETS BTN
         if btn.objectName() == "btn_open_file":
-            # Select Menu
-            self.ui.left_menu.select_only_one(btn.objectName())
+            self.path = QFileDialog.getOpenFileNames()[0][0]
+            if self.path != "":
+                self.printerMethod.clearAll()
+                MainFunctions.clear_screen(self)
+                MainFunctions.display_loading(self)
+                listeTrame = self.trameReader.createTramesList(self.path)
+                self.printerMethod.listeDecodedTrame = DecodeTrame().decodeAllTrame(listeTrame)
+                self.printerMethod.displayThroughCriteria(
+                    self.src, self.dst, self.pro)
 
-            # Load Page 2
-            MainFunctions.set_page(self, self.ui.load_pages.page_2)
+                for trame in self.printerMethod.listeDecodedTrame:
+                    if trame != None and trame.all_protocol_inside[3] != None:
+                        for field in trame.all_protocol_inside[3].fields:
+                            if field.id == "srcIpAddress" or field.id == "dstIpAddress":
+                                newIp = binary_to_ip_dotted(field.content)
+                                if newIp not in self.printerMethod.listeIp:
+                                    self.printerMethod.listeIp.append(
+                                        binary_to_ip_dotted(field.content))
 
+                for trame in self.printerMethod.listeDecodedTrame:
+                    if trame != None:
+                        np = None
+                        for key, val in trame.all_protocol_inside.items():
+                            if val != None:
+                                np = val
+                        if np.name not in self.printerMethod.listeProtocol:
+                            self.printerMethod.listeProtocol.append(
+                                np.name)
+
+                MainFunctions.reset_combo_box(self)
+                MainFunctions.clear_screen(self)
+                MainFunctions.update_table(
+                    self, self.printerMethod.displayList, self.path)
+        # print(listeIp)
         # LOAD USER PAGE
         if btn.objectName() == "btn_save":
             print("Save the file to pdf")
-            # Select Menu
-            # self.ui.left_menu.select_only_one(btn.objectName())
+            MainFunctions.clear_screen(self)
 
-            # Load Page 3
-            # MainFunctions.set_page(self, self.ui.load_pages.page_3)
+            # self.ui.combo_1.addItem('1')
+            # MainFunctions.export_to_pdf(self)
 
-            # BOTTOM INFORMATION
         if btn.objectName() == "btn_info":
             # CHECK IF LEFT COLUMN IS VISIBLE
             if not MainFunctions.left_column_is_visible(self):
@@ -200,8 +223,64 @@ class MainWindow(QMainWindow):
         # DEBUG
         print(f"Button {btn.objectName()}, released!")
 
-    # RESIZE EVENT
-    # ///////////////////////////////////////////////////////////////
+    def activated_1(self, index):
+        # MainFunctions.clear_screen(self)
+        print("Activated index:", index)
+
+    def text_changed_1(self, s):
+        self.pro = s
+        MainFunctions.clear_screen(self)
+        self.printerMethod.displayThroughCriteria(
+            self.src, self.dst, self.pro)
+        MainFunctions.update_table(
+            self, self.printerMethod.displayList, self.path)
+
+    def index_changed_1(self, index):
+        pass
+        # MainFunctions.update_table(
+        #     self, self.printerMethod.displayList, self.path)
+
+    def activated_2(self, index):
+        pass
+
+    def text_changed_2(self, s):
+        self.dst = s
+        MainFunctions.clear_screen(self)
+        self.printerMethod.displayThroughCriteria(
+            self.src, self.dst, self.pro)
+        MainFunctions.update_table(
+            self, self.printerMethod.displayList, self.path)
+
+        # MainFunctions.clear_screen(self)
+        # self.dst = s
+        # self.printerMethod.displayThroughCriteria(
+        #     self.src, self.dst, self.pro)
+        # MainFunctions.update_table(
+        #     self, self.printerMethod.displayList, self.path)
+
+    def index_changed_2(self, index):
+        pass
+
+    def activated_3(self, index):
+
+        pass
+
+    def text_changed_3(self, s):
+        # print("Text changed:", self.src)
+        self.src = s
+        MainFunctions.clear_screen(self)
+        self.printerMethod.displayThroughCriteria(
+            self.src, self.dst, self.pro)
+        MainFunctions.update_table(
+            self, self.printerMethod.displayList, self.path)
+
+    def index_changed_3(self, index):
+
+        pass
+
+        # RESIZE EVENT
+        # ///////////////////////////////////////////////////////////////
+
     def resizeEvent(self, event):
         SetupMainWindow.resize_grips(self)
 

@@ -5,6 +5,7 @@
   "maxSize": 480,
   "requestTypeSeparator": "0D0A",
   "headerSeparator": "20",
+  "color": "cdf3cd",
 
   "fields": {},
   "nextProtocolEncapsulated": [],

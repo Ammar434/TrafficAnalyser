@@ -5,7 +5,7 @@
   "maxSize": 480,
   "requestTypeSeparator": "",
   "headerSeparator": "",
-
+  "color": "90ee90",
   "fields": {
     "version": {
       "min": 4,

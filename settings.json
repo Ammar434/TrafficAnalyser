@@ -1,12 +1,12 @@
 {
-  "app_name": "Network traffic",
+  "app_name": "Visualisateur traffic reseau",
   "version": "v1.0.0",
   "copyright": "By: HOUSSENBAY Raoul Ammar",
   "year": 2022,
   "theme_name": "default",
   "custom_title_bar": true,
-  "startup_size": [1400, 720],
-  "minimum_size": [960, 540],
+  "startup_size": [1600, 720],
+  "minimum_size": [1400, 720],
   "lef_menu_size": {
     "minimum": 50,
     "maximum": 240

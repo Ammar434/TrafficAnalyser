@@ -4,6 +4,7 @@
   "protocolIdentification": "802.3",
   "requestTypeSeparator": "",
   "headerSeparator": "",
+  "color": "ffdc79",
 
   "maxSize": 12208,
   "fields": {

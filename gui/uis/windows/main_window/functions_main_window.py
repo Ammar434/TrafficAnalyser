@@ -1,26 +1,14 @@
-# ///////////////////////////////////////////////////////////////
-#
-# BY: WANDERSON M.PIMENTA
-# PROJECT MADE WITH: Qt Designer and PySide6
-# V: 1.0.0
-#
-# This project can be used freely for all uses, as long as they maintain the
-# respective credits only in the Python scripts, any information in the visual
-# interface (GUI) can be modified without any implication.
-#
-# There are limitations on Qt licenses if you want to use your products
-# commercially, I recommend reading them on the official website:
-# https://doc.qt.io/qtforpython/licenses.html
-#
-# ///////////////////////////////////////////////////////////////
 
-# IMPORT PACKAGES AND MODULES
-# ///////////////////////////////////////////////////////////////
+from asyncio import sleep
 import sys
+import time
+from services.integer_convert import binary_to_hex, hex_to_ascii, message_for_row
+from PySide6 import QtCore, QtGui, QtWidgets, QtPrintSupport
 
 # IMPORT QT CORE
 # ///////////////////////////////////////////////////////////////
 from qt_core import *
+from utils.constants import combo_box_initial_ip_dst, combo_box_initial_ip_src, combo_box_initial_protocol
 
 # LOAD UI MAIN
 # ///////////////////////////////////////////////////////////////
@@ -149,3 +137,135 @@ class MainFunctions():
         self.group.addAnimation(self.left_box)
         self.group.addAnimation(self.right_box)
         self.group.start()
+
+    def reset_combo_box(self):
+        self.ui.load_pages.comboBox.clear()
+        self.ui.load_pages.comboBox_2.clear()
+        self.ui.load_pages.comboBox_3.clear()
+        listeIp = (self.printerMethod.listeIp)
+        listeProtocol = (self.printerMethod.listeProtocol)
+
+        self.ui.load_pages.comboBox.addItem(combo_box_initial_protocol)
+        self.ui.load_pages.comboBox_2.addItem(combo_box_initial_ip_dst)
+        self.ui.load_pages.comboBox_3.addItem(combo_box_initial_ip_src)
+
+        self.ui.load_pages.comboBox.addItems(listeProtocol)
+        self.ui.load_pages.comboBox_2.addItems(listeIp)
+        self.ui.load_pages.comboBox_3.addItems(listeIp)
+
+    def display_loading(self, ):
+
+        self.circular_progress_1 = PyCircularProgress(
+            value=0,
+            progress_color=self.themes["app_color"]["context_color"],
+            text_color=self.themes["app_color"]["text_title"],
+            font_size=14,
+            bg_color=self.themes["app_color"]["dark_four"]
+        )
+        self.circular_progress_1.setFixedSize(200, 200)
+
+        self.ui.load_pages.row_for_tab.addWidget(
+            self.circular_progress_1)
+        self.ui.load_pages.row_for_tab.setAlignment(Qt.AlignHCenter)
+
+    def clear_screen(self):
+        count = self.ui.load_pages.row_for_tab.count()
+        if count == 0:
+            return
+        item = self.ui.load_pages.row_for_tab.itemAt(count - 1)
+        widget = item.widget()
+        widget.deleteLater()
+
+    def update_table(self, listeDecodedTrame, filePath):
+        # print("len avant creation table  "+str(len(listeDecodedTrame)))
+
+        self.table_widget = PyTableWidget(
+            radius=8,
+            color=self.themes["app_color"]["text_foreground"],
+            selection_color=self.themes["app_color"]["context_color"],
+            bg_color=self.themes["app_color"]["bg_two"],
+            header_horizontal_color=self.themes["app_color"]["dark_two"],
+            header_vertical_color=self.themes["app_color"]["bg_three"],
+            bottom_line_color=self.themes["app_color"]["bg_three"],
+            grid_line_color=self.themes["app_color"]["bg_one"],
+            scroll_bar_bg_color=self.themes["app_color"]["bg_one"],
+            scroll_bar_btn_color=self.themes["app_color"]["dark_four"],
+            context_color=self.themes["app_color"]["context_color"]
+        )
+        self.table_widget.setColumnCount(1)
+        self.table_widget.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch)
+
+        self.table_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.table_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.table_widget.setShowGrid(False)
+
+        tmp = QTableWidgetItem()
+        tmp.setTextAlignment(Qt.AlignCenter)
+        tmp.setText("Visualisation de la trame:  " + filePath)
+        self.table_widget.setHorizontalHeaderItem(0, tmp)
+        self.table_widget.setColumnWidth(0, 1000)
+
+        for count, trame in enumerate(listeDecodedTrame):
+            row_number = self.table_widget.rowCount()
+            self.table_widget.insertRow(row_number)
+
+            messageToInsert_1, color = message_for_row(trame)
+
+            # Insert row
+            self.table_widget.setItem(
+                row_number, 0, QTableWidgetItem(messageToInsert_1))
+            self.table_widget.item(
+                row_number, 0).setTextAlignment(Qt.AlignCenter)
+
+            self.table_widget.item(
+                row_number, 0).setForeground(QBrush(color))
+
+            self.table_widget.setRowHeight(row_number, 100)
+
+        self.ui.load_pages.row_for_tab.addWidget(self.table_widget)
+
+    def export_to_pdf(self):
+        w = self.table_widget
+
+        filename = "table.pdf"
+        model = w.model()
+
+        printer = QtPrintSupport.QPrinter(
+            QtPrintSupport.QPrinter.PrinterResolution)
+        printer.setOutputFormat(QtPrintSupport.QPrinter.PdfFormat)
+        printer.setPageSize(QPageSize.PageSizeId.A4)
+        printer.setPageOrientation(QPageLayout.Orientation.Landscape)
+        printer.setOutputFileName(filename)
+
+        doc = QtGui.QTextDocument()
+        doc.setDefaultStyleSheet(f'''
+          background-color:blue;color: lightgray; border: 1px solid black; border-radius:10px;font: bold
+        ''')
+        html = """<html>
+        <head>
+        <style>
+        table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        }
+        </style>
+        </head>"""
+        html += "<table><thead>"
+        html += "<tr>"
+        for c in range(model.columnCount()):
+            html += "<th>{}</th>".format(model.headerData(c,
+                                         QtCore.Qt.Horizontal))
+
+        html += "</tr></thead>"
+        html += "<tbody>"
+        for r in range(model.rowCount()):
+            html += "<tr>"
+            for c in range(model.columnCount()):
+                html += "<td>{}</td>".format(model.index(r, c).data() or "")
+            html += "</tr>"
+        html += "</tbody></table>"
+        doc.setHtml(html)
+
+        # doc.setPageSize(QtCore.QSizeF(printer.pageRect().size()))
+        doc.print_(printer)

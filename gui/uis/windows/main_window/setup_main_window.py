@@ -1,21 +1,4 @@
-# ///////////////////////////////////////////////////////////////
-#
-# BY: WANDERSON M.PIMENTA
-# PROJECT MADE WITH: Qt Designer and PySide6
-# V: 1.0.0
-#
-# This project can be used freely for all uses, as long as they maintain the
-# respective credits only in the Python scripts, any information in the visual
-# interface (GUI) can be modified without any implication.
-#
-# There are limitations on Qt licenses if you want to use your products
-# commercially, I recommend reading them on the official website:
-# https://doc.qt.io/qtforpython/licenses.html
-#
-# ///////////////////////////////////////////////////////////////
 
-# IMPORT PACKAGES AND MODULES
-# ///////////////////////////////////////////////////////////////
 from gui.widgets.py_table_widget.py_table_widget import PyTableWidget
 from . functions_main_window import *
 import sys
@@ -44,6 +27,7 @@ from . ui_main import *
 # MAIN FUNCTIONS
 # ///////////////////////////////////////////////////////////////
 from . functions_main_window import *
+from utils.dynamic_value import listeIp
 
 # PY WINDOW
 # ///////////////////////////////////////////////////////////////
@@ -86,14 +70,14 @@ class SetupMainWindow:
             "show_top": True,
             "is_active": False
         },
-        {
-            "btn_icon": "icon_add.svg",
-            "btn_id": "btn_add_user",
-            "btn_text": "Protocol",
-            "btn_tooltip": "Add new protocol",
-            "show_top": True,
-            "is_active": False
-        },
+        # {
+        #     "btn_icon": "icon_add.svg",
+        #     "btn_id": "btn_add_protocol",
+        #     "btn_text": "Protocol",
+        #     "btn_tooltip": "Add new protocol",
+        #     "show_top": True,
+        #     "is_active": False
+        # },
         {
             "btn_icon": "icon_info.svg",
             "btn_id": "btn_info",
@@ -102,32 +86,19 @@ class SetupMainWindow:
             "show_top": False,
             "is_active": False
         },
-        {
-            "btn_icon": "icon_settings.svg",
-            "btn_id": "btn_settings",
-            "btn_text": "Settings",
-            "btn_tooltip": "Open settings",
-            "show_top": False,
-            "is_active": False
-        }
+        # {
+        #     "btn_icon": "icon_settings.svg",
+        #     "btn_id": "btn_settings",
+        #     "btn_text": "Settings",
+        #     "btn_tooltip": "Open settings",
+        #     "show_top": False,
+        #     "is_active": False
+        # }
     ]
 
     # ADD TITLE BAR MENUS
     # ///////////////////////////////////////////////////////////////
-    add_title_bar_menus = [
-        # {
-        #     "btn_icon": "icon_search.svg",
-        #     "btn_id": "btn_search",
-        #     "btn_tooltip": "Search",
-        #     "is_active": False
-        # },
-        # {
-        #     "btn_icon": "icon_settings.svg",
-        #     "btn_id": "btn_top_settings",
-        #     "btn_tooltip": "Top settings",
-        #     "is_active": False
-        # }
-    ]
+    add_title_bar_menus = []
 
     # SETUP CUSTOM BTNs OF CUSTOM WIDGETS
     # Get sender() function when btn is clicked
@@ -143,18 +114,12 @@ class SetupMainWindow:
     # SETUP MAIN WINDOW WITH CUSTOM PARAMETERS
     # ///////////////////////////////////////////////////////////////
     def setup_gui(self):
-        # APP TITLE
-        # ///////////////////////////////////////////////////////////////
         self.setWindowTitle(self.settings["app_name"])
 
-        # REMOVE TITLE BAR
-        # ///////////////////////////////////////////////////////////////
         if self.settings["custom_title_bar"]:
             self.setWindowFlag(Qt.FramelessWindowHint)
             self.setAttribute(Qt.WA_TranslucentBackground)
 
-        # ADD GRIPS
-        # ///////////////////////////////////////////////////////////////
         if self.settings["custom_title_bar"]:
             self.left_grip = PyGrips(self, "left", self.hide_grips)
             self.right_grip = PyGrips(self, "right", self.hide_grips)
@@ -167,8 +132,6 @@ class SetupMainWindow:
             self.bottom_right_grip = PyGrips(
                 self, "bottom_right", self.hide_grips)
 
-        # LEFT MENUS / GET SIGNALS WHEN LEFT MENU BTN IS CLICKED / RELEASED
-        # ///////////////////////////////////////////////////////////////
         # ADD MENUS
         self.ui.left_menu.add_menus(SetupMainWindow.add_left_menus)
 
@@ -176,9 +139,24 @@ class SetupMainWindow:
         self.ui.left_menu.clicked.connect(self.btn_clicked)
         self.ui.left_menu.released.connect(self.btn_released)
 
-        # TITLE BAR / ADD EXTRA BUTTONS
-        # ///////////////////////////////////////////////////////////////
-        # ADD MENUS
+        self.ui.load_pages.comboBox.activated.connect(self.activated_1)
+        self.ui.load_pages.comboBox.currentTextChanged.connect(
+            self.text_changed_1)
+        self.ui.load_pages.comboBox.currentIndexChanged.connect(
+            self.index_changed_1)
+
+        self.ui.load_pages.comboBox_2.activated.connect(self.activated_2)
+        self.ui.load_pages.comboBox_2.currentTextChanged.connect(
+            self.text_changed_2)
+        self.ui.load_pages.comboBox_2.currentIndexChanged.connect(
+            self.index_changed_2)
+
+        self.ui.load_pages.comboBox_3.activated.connect(self.activated_3)
+        self.ui.load_pages.comboBox_3.currentTextChanged.connect(
+            self.text_changed_3)
+        self.ui.load_pages.comboBox_3.currentIndexChanged.connect(
+            self.index_changed_3)
+
         self.ui.title_bar.add_menus(SetupMainWindow.add_title_bar_menus)
 
         # SET SIGNALS
@@ -189,7 +167,7 @@ class SetupMainWindow:
         if self.settings["custom_title_bar"]:
             self.ui.title_bar.set_title(self.settings["app_name"])
         else:
-            self.ui.title_bar.set_title("Welcome to PyOneDark")
+            self.ui.title_bar.set_title("")
 
         # LEFT COLUMN SET SIGNALS
         # ///////////////////////////////////////////////////////////////
@@ -207,24 +185,6 @@ class SetupMainWindow:
         )
         MainFunctions.set_right_column_menu(self, self.ui.right_column.menu_1)
 
-        # ///////////////////////////////////////////////////////////////
-        # EXAMPLE CUSTOM WIDGETS
-        # Here are added the custom widgets to pages and columns that
-        # were created using Qt Designer.
-        # This is just an example and should be deleted when creating
-        # your application.
-        #
-        # OBJECTS FOR LOAD PAGES, LEFT AND RIGHT COLUMNS
-        # You can access objects inside Qt Designer projects using
-        # the objects below:
-        #
-        # <OBJECTS>
-        # LEFT COLUMN: self.ui.left_column.menus
-        # RIGHT COLUMN: self.ui.right_column
-        # LOAD PAGES: self.ui.load_pages
-        # </OBJECTS>
-        # ///////////////////////////////////////////////////////////////
-
         # LOAD SETTINGS
         # ///////////////////////////////////////////////////////////////
         settings = Settings()
@@ -235,45 +195,11 @@ class SetupMainWindow:
         themes = Themes()
         self.themes = themes.items
 
-        # LEFT COLUMN
-        # ///////////////////////////////////////////////////////////////
-
-        # BTN 1
-        self.left_btn_1 = PyPushButton(
-            text="Btn 1",
-            radius=8,
-            color=self.themes["app_color"]["text_foreground"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            bg_color_hover=self.themes["app_color"]["dark_three"],
-            bg_color_pressed=self.themes["app_color"]["dark_four"]
-        )
-        self.left_btn_1.setMaximumHeight(40)
-        self.ui.left_column.menus.btn_1_layout.addWidget(self.left_btn_1)
-
-        # BTN 2
-        self.left_btn_2 = PyPushButton(
-            text="Btn With Icon",
-            radius=8,
-            color=self.themes["app_color"]["text_foreground"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            bg_color_hover=self.themes["app_color"]["dark_three"],
-            bg_color_pressed=self.themes["app_color"]["dark_four"]
-        )
-        self.icon = QIcon(Functions.set_svg_icon("icon_settings.svg"))
-        self.left_btn_2.setIcon(self.icon)
-        self.left_btn_2.setMaximumHeight(40)
-        self.ui.left_column.menus.btn_2_layout.addWidget(self.left_btn_2)
-
-        # BTN 3 - Default QPushButton
-        self.left_btn_3 = QPushButton("Default QPushButton")
-        self.left_btn_3.setMaximumHeight(40)
-        self.ui.left_column.menus.btn_3_layout.addWidget(self.left_btn_3)
-
         # PAGES
         # ///////////////////////////////////////////////////////////////
 
-        # PAGE 1 - ADD LOGO TO MAIN PAGE
-        # LOAD CUSTOM ROW FOR IP
+        # PAGE 1 LOAD CUSTOM ROW FOR IP
+
         self.table_widget = PyTableWidget(
             radius=8,
             color=self.themes["app_color"]["text_foreground"],
@@ -287,139 +213,12 @@ class SetupMainWindow:
             scroll_bar_btn_color=self.themes["app_color"]["dark_four"],
             context_color=self.themes["app_color"]["context_color"]
         )
-        self.table_widget.setColumnCount(5)
-        self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Fixed)
-
-        self.table_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
-        self.table_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.table_widget.setShowGrid(False)
-
-        for x in range(5):
-
-            tmp = QTableWidgetItem()
-            tmp.setTextAlignment(Qt.AlignCenter)
-            tmp.setText("Ammar")
-            self.table_widget.setColumnWidth(x, 250)
-            self.table_widget.setHorizontalHeaderItem(x, tmp)
-
-        for x in range(5):
-            row_number = self.table_widget.rowCount()
-            self.table_widget.insertRow(row_number)  # Insert row
-            self.table_widget.setItem(
-                row_number, 0, QTableWidgetItem(str("Wanderson")))
-
-            self.table_widget.setRowHeight(row_number, 50)
-
-        # FOR MERGE CELL
-        self.table_widget.setSpan(0, 0, 1, 2)
-
-        # ADD WIDGETS
-
         self.ui.load_pages.row_for_tab.addWidget(self.table_widget)
-
-        # PAGE 2
-
-        # TABLE WIDGETS
-        self.table_widget = PyTableWidget(
-            radius=8,
-            color=self.themes["app_color"]["text_foreground"],
-            selection_color=self.themes["app_color"]["context_color"],
-            bg_color=self.themes["app_color"]["bg_two"],
-            header_horizontal_color=self.themes["app_color"]["dark_two"],
-            header_vertical_color=self.themes["app_color"]["bg_three"],
-            bottom_line_color=self.themes["app_color"]["bg_three"],
-            grid_line_color=self.themes["app_color"]["bg_one"],
-            scroll_bar_bg_color=self.themes["app_color"]["bg_one"],
-            scroll_bar_btn_color=self.themes["app_color"]["dark_four"],
-            context_color=self.themes["app_color"]["context_color"]
-        )
-        self.table_widget.setColumnCount(10)
-        self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table_widget.setSelectionMode(QAbstractItemView.ExtendedSelection)
-        self.table_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
-
-        # Columns / Header
-        self.column_1 = QTableWidgetItem()
-        self.column_1.setTextAlignment(Qt.AlignCenter)
-        self.column_1.setText("NAME")
-
-        self.column_2 = QTableWidgetItem()
-        self.column_2.setTextAlignment(Qt.AlignCenter)
-        self.column_2.setText("NICK")
-
-        self.column_3 = QTableWidgetItem()
-        self.column_3.setTextAlignment(Qt.AlignCenter)
-        self.column_3.setText("PASS")
-
-        # Set column
-        self.table_widget.setHorizontalHeaderItem(0, self.column_1)
-        self.table_widget.setHorizontalHeaderItem(1, self.column_2)
-        self.table_widget.setHorizontalHeaderItem(2, self.column_3)
-
-        for x in range(5):
-            row_number = self.table_widget.rowCount()
-            self.table_widget.insertRow(row_number)  # Insert row
-            self.table_widget.setItem(
-                row_number, 0, QTableWidgetItem(str("Wanderson")))  # Add name
-            self.table_widget.setItem(row_number, 1, QTableWidgetItem(
-                str("vfx_on_fire_" + str(x))))  # Add nick
-            self.pass_text = QTableWidgetItem()
-            self.pass_text.setTextAlignment(Qt.AlignCenter)
-            self.pass_text.setText("12345" + str(x))
-            self.table_widget.setItem(
-                row_number, 2, self.pass_text)  # Add pass
-            self.table_widget.setRowHeight(row_number, 22)
-
-        # ADD WIDGETS
-
-        self.ui.load_pages.row_5_layout.addWidget(self.table_widget)
-
-        # RIGHT COLUMN
-        # ///////////////////////////////////////////////////////////////
-
-        # BTN 1
-        self.right_btn_1 = PyPushButton(
-            text="Show Menu 2",
-            radius=8,
-            color=self.themes["app_color"]["text_foreground"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            bg_color_hover=self.themes["app_color"]["dark_three"],
-            bg_color_pressed=self.themes["app_color"]["dark_four"]
-        )
-        self.icon_right = QIcon(Functions.set_svg_icon("icon_arrow_right.svg"))
-        self.right_btn_1.setIcon(self.icon_right)
-        self.right_btn_1.setMaximumHeight(40)
-        self.right_btn_1.clicked.connect(lambda: MainFunctions.set_right_column_menu(
-            self,
-            self.ui.right_column.menu_2
-        ))
-        self.ui.right_column.btn_1_layout.addWidget(self.right_btn_1)
-
-        # BTN 2
-        self.right_btn_2 = PyPushButton(
-            text="Show Menu 1",
-            radius=8,
-            color=self.themes["app_color"]["text_foreground"],
-            bg_color=self.themes["app_color"]["dark_one"],
-            bg_color_hover=self.themes["app_color"]["dark_three"],
-            bg_color_pressed=self.themes["app_color"]["dark_four"]
-        )
-        self.icon_left = QIcon(Functions.set_svg_icon("icon_arrow_left.svg"))
-        self.right_btn_2.setIcon(self.icon_left)
-        self.right_btn_2.setMaximumHeight(40)
-        self.right_btn_2.clicked.connect(lambda: MainFunctions.set_right_column_menu(
-            self,
-            self.ui.right_column.menu_1
-        ))
-        self.ui.right_column.btn_2_layout.addWidget(self.right_btn_2)
-
-        # ///////////////////////////////////////////////////////////////
-        # END - EXAMPLE CUSTOM WIDGETS
-        # ///////////////////////////////////////////////////////////////
 
     # RESIZE GRIPS AND CHANGE POSITION
     # Resize or change position when window is resized
     # ///////////////////////////////////////////////////////////////
+
     def resize_grips(self):
         if self.settings["custom_title_bar"]:
             self.left_grip.setGeometry(5, 10, 10, self.height())

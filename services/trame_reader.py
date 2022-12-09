@@ -3,10 +3,12 @@ from services.integer_convert import hex_to_bin, is_hex
 
 # USE TO READ TRAME
 class TrameReader:
-    rawText = ""
-    rawTrame = []
-    rawAllTrame = []
-    allTrameLinear = []
+
+    def __init__(self) -> None:
+        self.rawText = ""
+        self.rawTrame = []
+        self.rawAllTrame = []
+        self.allTrameLinear = []
 
     def createTramesList(self, tramePath):
         self.readFromTxt(tramePath)
@@ -15,11 +17,16 @@ class TrameReader:
         return self.allTrameLinear
 
     def readFromTxt(self, tramePath):
+        self.rawText = ""
+        self.rawTrame = []
+        self.rawAllTrame = []
+        self.allTrameLinear = []
         try:
             with open(tramePath) as f:
                 for line in f:
                     self.rawText = self.rawText + line
-            self.rawTrame = self.rawText.replace("\n", " ").replace("\r", "")
+            self.rawTrame = self.rawText.replace(
+                "\n", " ").replace("\r", "")
             self.rawTrame = self.rawTrame.split(" ")
 
         except FileNotFoundError:

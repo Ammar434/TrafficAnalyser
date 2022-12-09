@@ -59,6 +59,9 @@
          <property name="styleSheet">
           <string notr="true">background: transparent;</string>
          </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
@@ -67,8 +70,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>838</width>
-            <height>578</height>
+            <width>840</width>
+            <height>580</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -92,7 +95,7 @@
               <string notr="true">font-size: 16pt</string>
              </property>
              <property name="text">
-              <string>Custom Widgets Page</string>
+              <string>Visualisateur de traffic réseau</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -102,8 +105,11 @@
            <item>
             <widget class="QLabel" name="description_label_2">
              <property name="text">
-              <string>Here will be all the custom widgets, they will be added over time on this page.
-I will try to always record a new tutorial when adding a new Widget and updating the project on Patreon before launching on GitHub and GitHub after the public release.</string>
+              <string>Ici, apparaîtra le trafic réseau correspondant à une trame.
+Pour commencer à analyser une trame, il faut la sélectionner dans le menu à votre gauche.
+Si besoin, vous pouvez filtrer la trame affichée selon quelques critères.
+
+</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -115,6 +121,69 @@ I will try to always record a new tutorial when adding a new Widget and updating
            </item>
            <item>
             <layout class="QVBoxLayout" name="row_for_tab"/>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_ForComboBox">
+             <item>
+              <widget class="QComboBox" name="comboBox_3">
+               <property name="styleSheet">
+                <string notr="true">ComboBox */
+QComboBox{
+	background-color: rgb(27, 29, 35);
+	border-radius: 5px;
+	border: 2px solid rgb(33, 37, 43);
+	padding: 5px;
+	padding-left: 10px;
+}
+QComboBox:hover{
+	border: 2px solid rgb(64, 71, 88);
+}
+QComboBox::drop-down {
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 25px; 
+	border-left-width: 3px;
+	border-left-color: rgba(39, 44, 54, 150);
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;	
+	background-image: url(:/icons/images/icons/cil-arrow-bottom.png);
+	background-position: center;
+	background-repeat: no-reperat;
+ }
+QComboBox QAbstractItemView {
+	color: rgb(255, 121, 198);	
+	background-color: rgb(33, 37, 43);
+	padding: 10px;
+	selection-background-color: rgb(39, 44, 54);
+}</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Display all source IP</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_2">
+               <item>
+                <property name="text">
+                 <string>Display all dest IP</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox">
+               <item>
+                <property name="text">
+                 <string>Display all protocol</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -161,8 +230,8 @@ I will try to always record a new tutorial when adding a new Widget and updating
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>840</width>
-            <height>580</height>
+            <width>215</width>
+            <height>266</height>
            </rect>
           </property>
           <property name="styleSheet">

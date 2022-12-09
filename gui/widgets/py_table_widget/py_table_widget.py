@@ -60,7 +60,6 @@ class PyTableWidget(QTableWidget):
             context_color
         )
 
-    # SET STYLESHEET
     def set_stylesheet(
         self,
         radius,
