@@ -5,8 +5,8 @@
   "year": 2022,
   "theme_name": "default",
   "custom_title_bar": true,
-  "startup_size": [1600, 720],
-  "minimum_size": [1400, 720],
+  "startup_size": [1280, 720],
+  "minimum_size": [1280, 720],
   "lef_menu_size": {
     "minimum": 50,
     "maximum": 240
