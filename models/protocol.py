@@ -49,11 +49,11 @@ class Protocol:
 
     @staticmethod
     def loadAllProtocol():
-        filePath = "models\data"
+        filePath = "models/data"
         res = SUCCESS
         for file in os.listdir(filePath):
             if file.endswith(".json"):
-                path = f"{filePath}\{file}"
+                path = f"{filePath}/{file}"
                 model = Protocol.loadModelFromJson(path)
                 ALL_PROTOCOl[model.layer].append(model)
         return res
