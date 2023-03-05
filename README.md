@@ -19,7 +19,7 @@
 
 <div align="center">
 
-[![](docs\presentation.gif)]()
+[![](https://raw.githubusercontent.com/Ammar434/TrafficAnalyser/main/docs/presentation.gif?token=GHSAT0AAAAAAB5XKMND2TJRWFRUIFNXVYMQZAEXWDA)]()
 <br />
 
 </div>
